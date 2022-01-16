@@ -1,0 +1,51 @@
+body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 30px;
+}
+
+.header__logo {
+    width: 80px;
+}
+
+.nav__item {
+    display: inline;
+    font-size: 1.2rem;
+    margin-left: 10px;
+}
+
+.nav__link {
+    text-decoration: none;
+}
+
+.nav__link:link {
+    color: black;
+}
+
+.nav__link:visited {
+    color: rgb(29, 29, 29);
+}
+
+.nav__link:hover,
+.nav__link:focus,
+.nav__link:active {
+    color: rgb(134, 134, 134);
+}
+
+.land {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(#67676778, #eceaea1e), url("../img/landing.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.login {
+    margin: 30px;
+}
