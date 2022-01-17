@@ -49,3 +49,8 @@ body {
 .login {
     margin: 30px;
 }
+
+.nav__item--border {
+    border-left: 1px solid grey;
+    padding-left: 15px;
+}

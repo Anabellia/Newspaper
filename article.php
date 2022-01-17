@@ -30,9 +30,22 @@ if(!$db->connect()) exit();
         <?php include_once("_menu.php")?>
         <main>
             <section>
-                <hr>
-                <?php
+            <hr>
+            <?php
+
             $query = "SELECT * FROM vwall_news";
+            $result = $db->query($query);
+            $row = $db->fetch_object($result);
+            
+            if(login())
+            {
+                if(admin_check()) 
+                {
+                    echo "The article is seen:" . $row->visited . "times<br>";
+                }
+            }
+            
+    
 
             if(isset($_GET['id'])) $query = "SELECT * FROM vwall_news WHERE deleted = 0 AND id=" . $_GET['id'];
             
@@ -62,8 +75,17 @@ if(!$db->connect()) exit();
 
                 echo "</div>";
             }
+
+            $query = "UPDATE vwall_news SET visited=visited+1 WHERE id=".$_GET['id'];
+
+            $db->query($query);
+
             unset($db);
             ?>
+            
+           
+
+           
             </section>
 
           

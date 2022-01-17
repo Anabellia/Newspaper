@@ -92,6 +92,7 @@ if(!$db->connect()) exit();
 
                 echo "</div>";
             }
+            
             unset($db);
             ?>
             </section>

@@ -6,21 +6,31 @@
             <nav>
                 <ul class="header__nav">
                 <?php
-                    /*if(korisnik ulogovan) {
+                    if(login()) {
                         echo "<li class='nav__item'>
-                        <a class='nav__link' href='news.php'>Home</a>
-                    </li>"
+                            <a class='nav__link' href='index.php'>Home</a>
+                        </li>";
                         echo "<li class='nav__item'>
-                        <a class='nav__link' href='news.php'>News</a>
-                    </li>"
-                    }*/
+                            <a class='nav__link' href='news.php'>News</a>
+                        </li>";
+                        echo "<li class='nav__item'>
+                            <a class='nav__link' href='logout.php'>Logout</a>
+                        </li>";
+
+                        $name = $_SESSION['full_name'];
+                        $firstname = explode(" ",$name);
+                        echo "<li class='nav__item nav__item--border'>
+                            <a class='nav__link' href='news.php'>{$firstname[0]}({$_SESSION['status']})</a>
+                            </li>";
+                    } else {
+                        echo "<li class='nav__item'>
+                            <a class='nav__link' href='login.php'>Sign in</a>
+                        </li>";
+                        echo "<li class='nav__item'>
+                            <a class='nav__link' href='register.php'>Register</a>
+                        </li>";
+                    }
                     ?>
-                    <li class="nav__item">
-                        <a class="nav__link" href="login.php">Sign in</a>
-                    </li>
-                    <li class="nav__item">
-                        <a class="nav__link" href="#news">Register</a>
-                    </li>
                     
                 </ul>
             </nav>
