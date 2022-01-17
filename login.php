@@ -7,6 +7,7 @@ require_once("_require.php");
 $db = new Database();
 if(!$db->connect()) exit();
 
+$message="";
 ?>
 
 
@@ -29,15 +30,61 @@ if(!$db->connect()) exit();
     <body>
         <?php include_once("_menu.php")?>
         <main>
+        <hr>
             <section class="login">
-                <hr>
+                
                 <h2>Sign in </h2>
-                <form action="login" method="post">
+                <form action="login.php" method="post">
                     <input type="text" name="email" placeholder="enter E-mail" required><br><br>
                     <input type="password" name="password" placeholder="enter Password" required><br><br>
-
-                    <button>Sign in</button>
+                    <input type="checkbox" name="remember" id="remember">
+                    <label for="remember">Remember me</label><br><br>
+                    <button type="submit" name="submit">Sign in</button>
                 </form>
+                <?php
+                if(isset($_POST['submit'])) {
+                    if(isset($_POST['email']) and isset($_POST['password'])) {
+                        
+                        $email = $_POST['email'];
+                        $password = $_POST['password'];
+
+                        if($email != "" or $password != "") {
+                            if(validString($email) and validString($password)) {
+                                $query = "SELECT * FROM vwusers WHERE email='{$email}'";
+                                $result = $db->query($query);
+                                if($db->num_rows($result) == 1) {
+                                    $row = $db->fetch_object($result);
+                                    if($row->active == 1) {
+                                        if($row->password == $password) {
+                                            //$message = Message::success("{$row->u_name} {$row->u_lastname} , $row->status");
+                                            $_SESSION['id'] = $row->id;
+                                            $_SESSION['full_name'] = $row->u_name . " " . $row->u_lastname;
+                                            $_SESSION['status'] = $row->status_name;
+
+                                            if(isset($_POST['remember'])) {
+                                                setcookie("id", $_SESSION['id'], time()+86400, "/");
+                                                setcookie("id", $_SESSION['full_name'], time()+86400, "/");
+                                                setcookie("id", $_SESSION['status'], time()+86400, "/");
+                                            }
+
+                                            header("location: index.php");
+                                        } else {
+                                            $message = Message::error_message("Wrong password for user '{$email}'");
+
+                                        }
+                                    } else {
+                                        $message = Message::info("User '{$email}' exists but it's not active");
+                                    }
+                                } else {
+                                    $create = "<a href='signup.php'>Create account</a>";
+                                    $message = Message::info("You don't have an account yet.",$create);
+                                }
+                            } else $message = Message::error_message("Email or password contain ivalid characters") ;
+                        }
+                    } 
+                } 
+                ?>
+                <p><?= $message?></p>
             </section>
 
           
