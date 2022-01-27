@@ -17,6 +17,7 @@ if(!$db->connect()) exit();
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/article.css" rel="stylesheet">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,8 +30,9 @@ if(!$db->connect()) exit();
     <body>
         <?php include_once("_menu.php")?>
         <main>
+        <hr>
             <section>
-            <hr>
+            
             <?php
 
             $query = "SELECT * FROM vwall_news";
@@ -88,7 +90,13 @@ if(!$db->connect()) exit();
            
             </section>
 
-          
+            <section>
+                <h3>Comments</h3>
+                <form action="article.php" method="post">
+                    <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Enter your comment"></textarea><br>
+                    <button>Save comment</button>
+                </form>
+            </section>
         </main>
         <?php include_once("_footer.php")?>
 

@@ -21,6 +21,7 @@ if(!$db->connect()) exit();
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300&display=swap" rel="stylesheet">
+        <link href="css/news.css" rel="stylesheet">
 
         <title>Home</title>
         
@@ -28,9 +29,22 @@ if(!$db->connect()) exit();
     </head>
     <body>
         <?php include_once("_menu.php")?>
+        <hr>
         <main>
             <section>
-                <hr>
+            <?php
+                    if(login()) {
+                        if($_SESSION['status'] == "Administrator") {
+                            echo "<a href='addnews.php'>Add news</a>";
+                            echo "<a href='deletenews.php'>Delete news</a>";
+
+                        }
+                    }
+                ?>
+            </section>
+            <hr>
+            <section>
+                
                 <?php
                 $query = "SELECT * FROM categories";
                 $result = $db->query($query);

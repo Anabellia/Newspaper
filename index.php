@@ -29,13 +29,6 @@ $db = new Database();
             <section class="land">
 
             </section>
-
-            <section class="news">
-
-            </section>
-            <aside>
-
-            </aside>
         </main>
         <?php include_once("_footer.php")?>
 
