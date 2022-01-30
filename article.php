@@ -17,7 +17,6 @@ if(!$db->connect()) exit();
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/style.css" rel="stylesheet">
-        <link href="css/article.css" rel="stylesheet">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,58 +28,66 @@ if(!$db->connect()) exit();
     </head>
     <body>
         <?php include_once("_menu.php")?>
+        
         <main>
-        <hr>
-            <section>
+        
+         
             
             <?php
 
-            $query = "SELECT * FROM vwall_news";
-            $result = $db->query($query);
-            $row = $db->fetch_object($result);
-            
-            if(login())
-            {
-                if(admin_check()) 
-                {
-                    echo "The article is seen:" . $row->visited . "times<br>";
-                }
+            /***********select from db */
+
+            if(isset($_GET['id'])) {
+                $query = "SELECT * FROM vwall_news WHERE deleted = 0 AND id=" . $_GET['id'];
             }
-            
-    
-
-            if(isset($_GET['id'])) $query = "SELECT * FROM vwall_news WHERE deleted = 0 AND id=" . $_GET['id'];
-            
 
             $result = $db->query($query);
-
+            $row=$db->fetch_object($result);
             if($db->error()) {
                 echo "Unsuccessful connection to database!";
                 echo $db->error().":(". $db->errno() .")";
                 exit();
             }
 
+       
 
-            echo "<a href='news.php'>Back to all news</a>";
+            /***********back and delete */
 
-
-            while($row=$db->fetch_object($result)) {
-                echo "<div style='border: 1px solid black; width: 100%; margin:2px; padding: 2px'>";
-                echo "<a href='news.php?category=".$row->category."'>".$row->c_name."</a><br>";
-                echo "<h3><a href='article.php?id=".$row->id."'>".$row->title."</a></h3>";
-      
-                    echo $row->text;
-     
-                
-                
-                echo "<b><a href='news.php?autor=".$row->author."'>".$row->fullname."</a></b> <i>".$row->time."</i><br>";
-
-                echo "</div>";
+            echo "<div class='addnews' style='margin-bottom: 25px';>";
+            echo "<a class='news__link news__link--left' href='news.php'>Back to all news</a>";
+            echo "<a class='news__link' href='article.php?id=" . $row->id . "&delete=" . $row->id ."'>Delete this article</a>";
+            echo "</div>";
+           
+            if(isset($_GET['delete'])) {
+                echo "<section style='padding-bottom: 25px;'>";
+                echo "<p>Are you sure you want to delete this article?</p>";
+                echo "<form action='article.php?id=" . $row->id . "' method='post'>";
+                echo "<button class='delete__btn'type='submit' name='del'>Delete</button>";
+                echo "<button class='cancel__btn'><a href='article.php?id=" . $row->id . "'>Cancel</a></button>";
+                echo "</form>";
+                echo "</section>";
             }
 
-            $query = "UPDATE vwall_news SET visited=visited+1 WHERE id=".$_GET['id'];
+            if(isset($_POST['del'])) {
+                $query = "UPDATE all_news SET deleted = 1 WHERE id=" . $_GET['id'];
+                $result = $db->query($query);
+                header('location: news.php');
 
-            $db->query($query);
+            }
+            
+           echo "<section>";
+            echo "<div style='border-bottom: 1px solid black; width: 740px; padding-bottom: 20px; padding-left:20px;'>";
+            echo "<div class='cat__wrapp'>";
+            echo "<h3><a class='category' href='news.php?category=".$row->category."'>".$row->c_name."</a></h3>";
+            echo "</div>";
+            echo "<h2><a class='title' href='article.php?id=".$row->id."'>".$row->title."</a></h2>";
+    
+            echo "<p class='text'>$row->text</p><br>";
+
+            echo "<b><a class='author' href='news.php?autor=".$row->author."'>".$row->fullname."</a></b> <i>".$row->time."</i><br>";
+
+            echo "</div>";
+            echo "</section>";
 
             unset($db);
             ?>
@@ -90,10 +97,10 @@ if(!$db->connect()) exit();
            
             </section>
 
-            <section>
+            <section class="comments">
                 <h3>Comments</h3>
                 <form action="article.php" method="post">
-                    <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Enter your comment"></textarea><br>
+                    <textarea name="comment" id="comment" cols="70" rows="4" placeholder="Enter your comment"></textarea><br>
                     <button>Save comment</button>
                 </form>
             </section>

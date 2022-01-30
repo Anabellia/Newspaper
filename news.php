@@ -21,7 +21,7 @@ if(!$db->connect()) exit();
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300&display=swap" rel="stylesheet">
-        <link href="css/news.css" rel="stylesheet">
+       
 
         <title>Home</title>
         
@@ -29,38 +29,38 @@ if(!$db->connect()) exit();
     </head>
     <body>
         <?php include_once("_menu.php")?>
-        <hr>
+        
+        
         <main>
-            <section>
-            <?php
-                    if(login()) {
-                        if($_SESSION['status'] == "Administrator") {
-                            echo "<a href='addnews.php'>Add news</a>";
-                            echo "<a href='deletenews.php'>Delete news</a>";
+        <section class="addnews">
+                    <?php
+                        if(login()) {
+                            if($_SESSION['status'] == "Administrator") {
+                                echo "<a class='news__link' href='addnews.php'>Add news</a>";
 
+                            }
                         }
-                    }
-                ?>
-            </section>
-            <hr>
-            <section>
-                
+                    ?>
+                </section>
                 <?php
                 $query = "SELECT * FROM categories";
                 $result = $db->query($query);
+                echo "<div class='news__category-wrapp'>";
+                echo "<div>";
+                echo "<a class='news__category' href='news.php'>All news</a>";
                 while($row = $db->fetch_object($result)) {
-                    echo "<a href='news.php?category={$row->id}'>{$row->c_name} </a>";
+                    echo "<a class='news__category' href='news.php?category={$row->id}'>{$row->c_name} </a>";
                 }
-                
-
-
+                echo "</div>"
                 ?>
-                <form action="news.php" method="post">
+                
+                <form class="search" action="news.php" method="post">
                 <input type="text" name="keyword" placeholder="Search">
                 <button>Search</button>
+            </div>
 
                 </form>
-               
+                <section>
             <?php
             $query = "SELECT * FROM vwall_news WHERE deleted=0";
 
@@ -78,31 +78,36 @@ if(!$db->connect()) exit();
             }
 
 
-            echo "<br>Number of news: ".$db->num_rows($result);
-
          
 
             while($row=$db->fetch_object($result)) {
-                echo "<div style='border: 1px solid black; width: 100%; margin:2px; padding: 2px'>";
-                echo "<a href='news.php?category=".$row->category."'>".$row->c_name."</a><br>";
-                echo "<h3><a href='article.php?id=".$row->id."'>".$row->title."</a></h3>";
+                echo "<div style='border-bottom: 1px solid black; padding-bottom: 20px; padding-left: 20px; width: 740px;'>";
+                echo "<div class='cat__wrapp'>";
+                
+
+                echo "<h3><a class='category' href='news.php?category=".$row->category."'>".$row->c_name."</a></h3>";
+                echo "</div>";
+                echo "<h2><a class='title' href='article.php?id=".$row->id."'>".$row->title."</a></h2>";
                 if(isset($_GET['id']))
-                    echo $row->text;
+                    echo "<p class='text'>$row->text</p>";
                 else
                 {
                     //$a=$vest->deoTeksta();
                     $tmp=explode(" ", $row->text);
-                    $new=array_slice($tmp, 0, 20);
-                    $a=implode(" ", $new).".....<br>";
-                    if(isset($_POST['keyword']))
+                    $new=array_slice($tmp, 0, 40);
+                    $a=implode(" ", $new)."...";
+                    if(isset($_POST['keyword'])) {
                         echo str_replace(strtolower($_POST['keyword']), "<span style='background-color:yellow'>".$_POST['keyword']."</span>", strtolower($a));
-                    else
-                        echo $a;
+                        echo "<br>";
+                    }
+                        
+                    else 
+                        echo "<p class='text'>$a</p>";
                 }
                     
                 
                 
-                echo "<b><a href='news.php?autor=".$row->author."'>".$row->fullname."</a></b> <i>".$row->time."</i><br>";
+                echo "<b><a class='author' href='news.php?author=".$row->author."'>".$row->fullname."</a></b> <i>".$row->time."</i><br>";
 
                 echo "</div>";
             }
