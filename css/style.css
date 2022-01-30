@@ -1,6 +1,7 @@
 body {
     font-family: 'Be Vietnam Pro', sans-serif;
     margin: 0;
+    box-sizing: border-box;
 }
 
 .header {
@@ -21,6 +22,7 @@ body {
 
 .nav__link {
     text-decoration: none;
+    vertical-align: middle;
 }
 
 .nav__link:link {
@@ -53,4 +55,155 @@ body {
 .nav__item--border {
     border-left: 1px solid grey;
     padding-left: 15px;
+}
+
+section {
+    padding: 0 30px;
+}
+
+
+.news__link {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid white;
+    padding: 5px 10px;
+}
+
+.news__link:hover,
+.news__link:active {
+    color: rgb(216, 216, 216);
+}
+
+.news__category-wrapp {
+    background-color: green;
+    padding: 17px 30px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.news__category {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    margin-right: 12px;
+    padding: 0 10px;
+    
+    border-right: 2px solid white;
+}
+
+
+.news__category:hover,
+.news__category:active
+ {
+    color: rgb(216, 216, 216);
+}
+
+.category {
+    color: green;
+    font-weight: 900;
+    text-decoration: none;
+    
+}
+.search {
+    display: flex;
+}
+
+.search input {
+    margin-right: 15px;
+    border-radius: 5px;
+    border: 0;
+    padding: 7px;
+}
+
+.search button {
+    padding: 0 15px
+}
+
+.author {
+    text-decoration: none;
+    color: red;
+}
+
+.addnews {
+    background-color: #0a0a4c;
+    padding: 15px 30px;
+}
+
+
+
+h2 {
+    width: 700px;
+}
+
+.title {
+    text-decoration: none;
+    color: black;
+    font-weight: 900;
+    
+    width: 700px;
+}
+
+.title:hover,
+.title:active {
+    color: green;
+}
+
+.cat__wrapp {
+    background-color: #dfdfdf;
+    padding: 10px 20px;
+    width: 700px;
+}
+
+h3 {
+ margin: 0;
+}
+
+.text {
+    margin-bottom:0 ;
+    padding-bottom: 20px;
+    width: 700px;
+}
+
+.news__link--left {
+    margin-right: 15px;
+}
+
+.delete__btn {
+    margin-right: 15px;
+    color: red;
+}
+
+.cancel__btn a{
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px 15px;
+    border:1px solid grey;
+    cursor: pointer;
+}
+
+.comments {
+    padding: 20px 50px;
+}
+
+.comments h3,
+.comments textarea {
+    margin-bottom: 20px;
+}
+
+h3 a[href="news.php?category=2"] {
+    color: #a600b7;
+}
+h3 a[href="news.php?category=3"] {
+    color: #001cba;
+}
+
+h3 a[href="news.php?category=4"] {
+    color: black;
 }

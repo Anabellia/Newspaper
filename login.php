@@ -29,8 +29,9 @@ $message="";
     </head>
     <body>
         <?php include_once("_menu.php")?>
-        <main>
         <hr>
+        <main>
+        
             <section class="login">
                 
                 <h2>Sign in </h2>
