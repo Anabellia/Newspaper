@@ -9,6 +9,7 @@ if(!$db->connect()) exit();
 
 $message = "";
 $messageSelect = "";
+$messageDel = "";
 
 if(!login_check()) {
     if($_SESSION['status'] != "Administrator" || $_SESSION['status'] != "User") {
@@ -47,7 +48,7 @@ if(!login_check()) {
 
 /*************** select from db */
 
-                $query = "SELECT * FROM vwall_news where deleted=0";
+                $query = "SELECT * FROM vwall_news where deleted=0 and id=".$_GET['id'];
 
                 $result = $db->query($query);
                 $row=$db->fetch_object($result);
@@ -62,7 +63,7 @@ if(!login_check()) {
 
                 echo "<div class='addnews' style='margin-bottom: 25px';>";
                 echo "<a class='news__link news__link--left' href='news.php'>Back to all news</a>";
-                echo "<a class='news__link' href='article.php?id=" . $row->id . "&delete=" . $row->id ."'>Delete this article</a>";
+                echo "<a class='news__link news__link--del' href='article.php?id=" . $row->id . "&delete=" . $row->id ."'>Delete this article</a>";
                 echo "</div>";
             
                 if(isset($_GET['delete'])) {
@@ -152,7 +153,12 @@ if(!login_check()) {
                     <textarea name="comment" id="comment"  rows="4" placeholder="Enter your comment"></textarea><br>
                     
                     <button>Save comment</button>
-                    <p><?= $message?></p>
+                    <p><?php
+                    
+                    echo $message;
+                    
+
+                    ?></p>
                 </form>
             </div>
 
@@ -187,9 +193,9 @@ if(!login_check()) {
                         while($row = $db->fetch_object($result)) {
                             echo "<div class='comments__show--admin'>";
                             echo "<input type='checkbox' name='checkboxstatus[".$i."]' value=" . $row->id . ">";
-                            echo "<div>";
-                            echo "<p class='comment__text'>$row->comment</p>";
-                            echo "<p class='comment__user'><b>$row->username</b> , <i><small>$row->time_add</small></i></p>";
+                            echo "<div class='comment__wrapp'>";
+                            echo "<p class='comment__text comment__text--admin'>$row->comment</p>";
+                            echo "<p class='comment__user comment__user--admin'><b>$row->username</b> , <i><small>$row->time_add</small></i></p>";
                             echo "</div>";
                             echo "</div>";
                             $i++;
@@ -212,6 +218,8 @@ if(!login_check()) {
                     if(isset($_POST['user-comment-delete'])) {
                         $queryCommDel = "UPDATE comments SET deleted = 1 WHERE id=" . $_GET['comment'];
                         $resultCommDel = $db->query($queryCommDel);
+                        $messageDel = Message::info("Your comment is deleted");
+                         echo $messageDel; 
                     }
 
                     /** comments show */
@@ -222,6 +230,7 @@ if(!login_check()) {
                     while($row = $db->fetch_object($result)) {
                         echo "<div class='comments__show'>";
                         echo "<p class='comment__text'>$row->comment</p>";
+                        echo "<div class='comm-del-wrapp'>";
                         echo "<p class='comment__user'><b>$row->username</b> , <i><small>$row->time_add</small></i></p>";
 
                         /** delete button */
@@ -229,20 +238,14 @@ if(!login_check()) {
                         if($row->username == $_SESSION['full_name']) {
 
                             echo "<form action='article.php?id=" . $_GET['id'] ."&comment=" . $row->id ."' method='post'>";
-                            echo "<button class='delete__btn' type='submit' name='user-comment-delete'>Delete</button>";
+                            echo "<input type='submit' class='delete__btn' name='user-comment-delete' value='delete my comment'/>";
                             echo "</form>";
         
                         }
-
+                        echo "</div>";
                         echo "</div>";
  
                     }
-
-                   
-
-                   
-
-                    
 
                 }
 
