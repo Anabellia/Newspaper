@@ -1,13 +1,13 @@
 <?php
 class Message{
     public static function error_message($str){
-        return "<div style='background-color: red; color: white;width: 100%; margin: 2px; padding:2px'>$str</div>";
+        return "<div style='font-weight: 600; color: red;display: inline-block; border-radius: 5px;'>$str</div>";
     }
     public static function success($str){
-        return "<div style='background-color: green; color: white;width: 100%; margin: 2px; padding:2px'>$str</div>";
+        return "<div style='font-weight: 600; color: green;display: inline-block; border-radius: 5px;'>$str</div>";
     }
     public static function info($str, $create=''){
-        return "<div style='background-color: blue; color: white;width: 100%; margin: 2px; padding:2px'>$str $create</div>";
+        return "<div style='font-weight: 600; color: blue;display: inline-block; border-radius: 5px;'>$str $create</div>";
     }
 }
 ?>

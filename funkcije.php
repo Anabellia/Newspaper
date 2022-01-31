@@ -63,4 +63,10 @@ function admin_check() {
     else return false;
                 
 }
+
+function login_check() {
+    if($_SESSION['status'] == "Administrator" || $_SESSION['status'] == "User") return true;
+    else return false;
+                
+}
 ?>

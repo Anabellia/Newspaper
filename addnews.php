@@ -7,6 +7,20 @@ $db = new Database();
 if(!$db->connect()) exit();
 
 $message="";
+
+if(!login_check()) {
+    if($_SESSION['status'] != "Administrator" || $_SESSION['status'] != "User") {
+        header("location: index.php");
+
+    }
+}
+
+if(login()) {
+    if($_SESSION['status'] != "Administrator") {
+        header("location: index.php");
+
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,17 +36,7 @@ $message="";
 <body>
 <?php include_once("_menu.php")?>
 <hr>
-    <?php
-        if(login()) {
-            if($_SESSION['status'] != "Administrator") {
-                header("location: index.php");
-
-            }
-        }
-
-        
-    ?>
-    <section class="section">
+    <section class="add__news">
         <h2>Add news</h2>
         <form action="addnews.php" method="post">
             
