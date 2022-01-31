@@ -33,15 +33,17 @@ $message="";
         <main>
         
             <section class="login">
+                <div class="signin__wrapp">
+                    <h2 class="signin__title">Sign in </h2>
+                    <form action="login.php" method="post">
+                        <input class="email" type="text" name="email" placeholder="enter E-mail" required><br><br>
+                        <input class="pass" type="password" name="password" placeholder="enter Password" required><br><br>
+                        <input type="checkbox" name="remember" id="remember">
+                        <label for="remember">Remember me</label><br><br>
+                        <button type="submit" name="submit">Sign in</button>
+                    </form>
+                </div>
                 
-                <h2>Sign in </h2>
-                <form action="login.php" method="post">
-                    <input type="text" name="email" placeholder="enter E-mail" required><br><br>
-                    <input type="password" name="password" placeholder="enter Password" required><br><br>
-                    <input type="checkbox" name="remember" id="remember">
-                    <label for="remember">Remember me</label><br><br>
-                    <button type="submit" name="submit">Sign in</button>
-                </form>
                 <?php
                 if(isset($_POST['submit'])) {
                     if(isset($_POST['email']) and isset($_POST['password'])) {

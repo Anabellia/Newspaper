@@ -4,10 +4,25 @@ body {
     box-sizing: border-box;
 }
 
+main {
+    background-color: honeydew;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
-    margin: 10px 30px;
+    padding: 10px 50px;
+    background-color: #FDC6FD;
+}
+
+.header:after {
+    content:"";
+    position:absolute;
+    width:100%;
+    bottom:1px;
+    z-index:-1;
+    transform:scale(.9);
+    box-shadow: 0px 0px 8px 2px #000000;
 }
 
 .header__logo {
@@ -41,24 +56,22 @@ body {
 
 .land {
     width: 100%;
-    height: 400px;
+    height: 100vh;
     background: linear-gradient(#67676778, #eceaea1e), url("../img/landing.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
-.login {
-    margin: 30px;
-}
 
 .nav__item--border {
     border-left: 1px solid grey;
     padding-left: 15px;
+    vertical-align: middle;
 }
 
 section {
-    padding: 0 30px;
+    padding: 0 50px;
 }
 
 
@@ -76,8 +89,7 @@ section {
 }
 
 .news__category-wrapp {
-    background-color: green;
-    padding: 17px 30px;
+    padding: 17px 50px;
     margin-bottom: 25px;
     display: flex;
     justify-content: space-between;
@@ -85,12 +97,12 @@ section {
 }
 .news__category {
     text-decoration: none;
-    color: white;
+    color:#fff;
     font-weight: 600;
     margin-right: 12px;
     padding: 0 10px;
     
-    border-right: 2px solid white;
+    border-right: 2px solid #fff;
 }
 
 
@@ -124,17 +136,17 @@ section {
 .author {
     text-decoration: none;
     color: red;
+    padding: 0 30px;
 }
 
 .addnews {
     background-color: #0a0a4c;
-    padding: 15px 30px;
+    padding: 15px 50px;
+    display: flex;
 }
 
-
-
 h2 {
-    width: 700px;
+    padding: 10px 30px;
 }
 
 .title {
@@ -147,13 +159,15 @@ h2 {
 
 .title:hover,
 .title:active {
-    color: green;
+    color: rgb(255, 196, 0);
 }
 
 .cat__wrapp {
     background-color: #dfdfdf;
+}
+
+.cat__wrapp h3 {
     padding: 10px 20px;
-    width: 700px;
 }
 
 h3 {
@@ -162,9 +176,10 @@ h3 {
 
 .text {
     margin-bottom:0 ;
-    padding-bottom: 20px;
-    width: 700px;
+    margin-right: 0;
+    padding: 10px 30px;
 }
+
 
 .news__link--left {
     margin-right: 15px;
@@ -177,11 +192,14 @@ h3 {
 
 .cancel__btn a{
     text-decoration: none;
-    color: black;
+    color: #fff;
 }
 
 button {
-    background-color: #fff;
+    background-color: #0a0a4c;
+    color: #fff;
+    font-size: 21px;
+    font-weight: 600;
     border-radius: 5px;
     padding: 10px 15px;
     border:1px solid grey;
@@ -189,7 +207,7 @@ button {
 }
 
 .comments {
-    padding: 20px 50px;
+    padding:30px 0 10px;
 }
 
 .comments h3,
@@ -200,10 +218,153 @@ button {
 h3 a[href="news.php?category=2"] {
     color: #a600b7;
 }
+
 h3 a[href="news.php?category=3"] {
     color: #001cba;
 }
 
 h3 a[href="news.php?category=4"] {
     color: black;
+}
+
+
+.comments__show--admin {
+    border: 1px solid grey;
+    margin: 20px;
+    width: 700px;
+    padding: 0;
+    margin-left: 0;
+
+    display: flex;
+    align-items: center;
+}
+
+.comments__show {
+    border: 1px solid grey;
+    margin: 20px;
+    width: 700px;
+    padding: 0;
+    margin-left: 0;
+
+    display: flex;
+    align-items: center;
+}
+
+.comments__show > div {
+    width: 100%;
+}
+
+.comments__show p {
+    margin: 0px;
+    
+}
+
+.comment__text {
+    padding: 15px;
+    background-color: cornsilk;
+}
+
+.comment__user {
+    padding: 5px 15px;
+    background-color: blanchedalmond;
+
+}
+
+#comment {
+    padding: 10px;
+    font-family:'Be Vietnam Pro', sans-serif;
+    width: 680px;
+}
+
+.article__story {
+    width: 700px; 
+    margin-bottom: 50px; 
+    padding-bottom: 10px; 
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+
+.news__box {
+    border: 1px solid gray; 
+    padding-bottom: 20px; 
+    width: 700px;
+    margin-bottom: 20px;
+}
+
+.email,
+.pass {
+    padding: 7px;
+}
+
+.add__news {
+    text-align: center;
+    min-height: 100vh;
+    padding-bottom: 50px;
+}
+
+button[name="delete_comment"] {
+    color: black;
+    background-color: #fff;
+    font-weight: normal;
+    font-size: small;
+    margin-top: 10px;
+}
+
+input[type="checkbox"] {
+    margin: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.wrapp_allnews {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 50px;
+}
+
+footer {
+    background-color: #0a0a4c;
+    height: 70px;
+    color: #fff;
+    text-align: center;
+    padding-top:  15px ;
+}
+
+#remember {
+    margin: 0 7px 0 0 ;
+}
+
+
+.login {
+    margin: 0 auto;
+    text-align: center;
+    min-height: 100vh;
+    min-width: 300px;
+    max-width:400px;
+    padding-top: 70px;
+    
+}
+
+.signin__wrapp {
+    background-color: #c6fdc6;
+    border-radius: 10px;
+    padding: 20px 0 50px;
+    box-shadow: 0 0 16px 0px #12121229;
+}
+
+.signin__title {
+    margin-top: 0;
+}
+
+hr {
+    margin: 0;
+}
+
+.comments__show-form {
+    margin-bottom: 50px;
+}
+
+button[name="delete_comment"] {
+    padding-bottom: 10px;
 }

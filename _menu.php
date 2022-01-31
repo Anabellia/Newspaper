@@ -20,7 +20,7 @@
                         $name = $_SESSION['full_name'];
                         $firstname = explode(" ",$name);
                         echo "<li class='nav__item nav__item--border'>
-                            <a class='nav__link' href='news.php'>{$firstname[0]}({$_SESSION['status']})</a>
+                            {$firstname[0]}({$_SESSION['status']})
                             </li>";
                     } else {
                         echo "<li class='nav__item'>

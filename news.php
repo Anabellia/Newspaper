@@ -7,6 +7,15 @@ require_once("_require.php");
 $db = new Database();
 if(!$db->connect()) exit();
 
+
+if(!login_check()) {
+    if($_SESSION['status'] != "Administrator" || $_SESSION['status'] != "User") {
+        header("location: index.php");
+
+    }
+}
+
+        
 ?>
 
 
@@ -23,7 +32,7 @@ if(!$db->connect()) exit();
         <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300&display=swap" rel="stylesheet">
        
 
-        <title>Home</title>
+        <title>News</title>
         
 
     </head>
@@ -41,7 +50,7 @@ if(!$db->connect()) exit();
                             }
                         }
                     ?>
-                </section>
+                
                 <?php
                 $query = "SELECT * FROM categories";
                 $result = $db->query($query);
@@ -59,8 +68,9 @@ if(!$db->connect()) exit();
                 <button>Search</button>
             </div>
 
-                </form>
-                <section>
+            </form>
+            </section>
+            <section class="wrapp_allnews">
             <?php
             $query = "SELECT * FROM vwall_news WHERE deleted=0";
 
@@ -81,7 +91,7 @@ if(!$db->connect()) exit();
          
 
             while($row=$db->fetch_object($result)) {
-                echo "<div style='border-bottom: 1px solid black; padding-bottom: 20px; padding-left: 20px; width: 740px;'>";
+                echo "<div class='news__box'>";
                 echo "<div class='cat__wrapp'>";
                 
 
@@ -94,7 +104,7 @@ if(!$db->connect()) exit();
                 {
                     //$a=$vest->deoTeksta();
                     $tmp=explode(" ", $row->text);
-                    $new=array_slice($tmp, 0, 40);
+                    $new=array_slice($tmp, 0, 35);
                     $a=implode(" ", $new)."...";
                     if(isset($_POST['keyword'])) {
                         echo str_replace(strtolower($_POST['keyword']), "<span style='background-color:yellow'>".$_POST['keyword']."</span>", strtolower($a));
