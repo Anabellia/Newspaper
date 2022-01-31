@@ -14,19 +14,21 @@ class Database {
         $this->database = "news"; 
     }
 
-    /*public function __destruct() {
-        mysqli_close($this->db);
-    }*/
+  
 
     public function connect() {
-        $this->db = @mysqli_connect($this->location, $this->username, $this->password, $this->database);
-        if(!$this->db) return false;
-        $this->query("SET NAMES utf8");
+        try{
+            $this->db = @mysqli_connect($this->location, $this->username, $this->password, $this->database);
+            if(!$this->db) throw new Exception(mysqli_connect_error()); //throw exception so mysqli can execute anything that's in catch block because my sqli doesn't throw exceptions he was made before there were exceptions at all
+        } catch (Exception $e){
+            echo $e->getMessage();
+
+        }
         return $this->db;
     }
 
     public function query($query) {
-        return mysqli_query($this->db, $query);
+        return @mysqli_query($this->db, $query);
     }
 
     public function fetch_assoc($result) {
@@ -34,7 +36,7 @@ class Database {
     }
 
     public function fetch_object($result) {
-        return mysqli_fetch_object($result);
+        return @mysqli_fetch_object($result);
     }
 
     public function error() {

@@ -44,6 +44,7 @@ $message="";
                     </form>
                 </div>
                 
+                
                 <?php
                 if(isset($_POST['submit'])) {
                     if(isset($_POST['email']) and isset($_POST['password'])) {
@@ -79,8 +80,7 @@ $message="";
                                         $message = Message::info("User '{$email}' exists but it's not active");
                                     }
                                 } else {
-                                    $create = "<a href='signup.php'>Create account</a>";
-                                    $message = Message::info("You don't have an account yet.",$create);
+                                    $message = Message::info("Your email or password is not correct.");
                                 }
                             } else $message = Message::error_message("Email or password contain ivalid characters") ;
                         }
@@ -88,6 +88,8 @@ $message="";
                 } 
                 ?>
                 <p><?= $message?></p>
+                <p>If you don't have an account yet-> <br><a href='register.php'>Create Account</a></p>
+
             </section>
 
           
