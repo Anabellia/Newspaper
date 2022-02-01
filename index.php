@@ -3,7 +3,13 @@
 session_start();
 require_once("_require.php");
 
-$db = new Database();
+try {
+    $db = new Database();
+    if(!$db->connect()) throw new errorConnection();
+}
+catch (errorConnection $e){
+    $e->message();
+}
 ?>
 
 

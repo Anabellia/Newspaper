@@ -13,6 +13,26 @@ function validString($str)
     return true;
 }
 
+function sanitize_str($str) {
+    $str = filter_var($str, FILTER_SANITIZE_STRING);
+    return $str;
+}
+
+function sanitize_email($email) {
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    return $email;
+}
+
+function filter_int($int) {
+    if(!filter_var($int, FILTER_VALIDATE_INT)) {
+        echo Message::error_message("Data is not an integer!");
+        exit();
+        return false;
+    }
+    else return true;
+}
+
+
 
 function login() {
     if(isset($_SESSION['id']) and isset($_SESSION['full_name']) and isset($_SESSION['status'])) 

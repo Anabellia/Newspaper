@@ -48,7 +48,9 @@ class Database {
     }
 
     public function num_rows($result) {
-        return mysqli_num_rows($result);
+        if(mysqli_num_rows($result) > "0") return true;
+        else return false;
+        
     }
 
 
