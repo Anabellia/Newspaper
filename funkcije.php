@@ -1,18 +1,5 @@
 <?php
 
-
-function validString($str)
-{
-    if(strpos($str, ' ')!==false) return false;
-    if(strpos($str, '=')!==false) return false;
-    if(strpos($str, '(')!==false) return false;
-    if(strpos($str, ')')!==false) return false;
-    if(strpos($str, '*')!==false) return false;
-
-
-    return true;
-}
-
 function sanitize_str($str) {
     $str = filter_var($str, FILTER_SANITIZE_STRING);
     return $str;
@@ -27,6 +14,14 @@ function filter_int($int) {
     if(!filter_var($int, FILTER_VALIDATE_INT)) {
         echo Message::error_message("Data is not an integer!");
         exit();
+        return false;
+    }
+    else return true;
+}
+
+function filter_email($email) {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo Message::error_message("Email is not valid!");
         return false;
     }
     else return true;

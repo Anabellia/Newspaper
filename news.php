@@ -135,7 +135,7 @@ if(!login_check()) {
                     if(!$resultComNum) throw new errorQuery;
                     if(mysqli_num_rows($resultComNum) != null) {
                         $resultComNum = $db->fetch_object($resultComNum);
-                        echo "<span style='float: right;'>comments: " . $resultComNum->num . "</span>";
+                        echo "<span style='float: right; padding-right: 30px;'>comments: " . $resultComNum->num . "</span>";
                     } else {
                         echo "<span style='float: right;'>comments: 0</span>";
                     }

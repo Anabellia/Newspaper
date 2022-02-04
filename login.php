@@ -18,7 +18,7 @@ require_once("_require.php");
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300&display=swap" rel="stylesheet">
 
-        <title>Home</title>
+        <title>Sign in</title>
         
 
     </head>
@@ -31,7 +31,7 @@ require_once("_require.php");
                 <div class="signin__wrapp">
                     <h2 class="signin__title">Sign in </h2>
                     <form action="login.php" method="post">
-                        <input class="email" type="text" name="email" placeholder="enter E-mail" required><br><br>
+                        <input class="email" type="text" name="username" placeholder="enter E-mail or Username" required><br><br>
                         <input class="pass" type="password" name="password" placeholder="enter Password" required><br><br>
                         <input type="checkbox" name="remember" id="remember">
                         <label for="remember">Remember me</label><br><br>
@@ -49,23 +49,41 @@ require_once("_require.php");
                     if(!$db->connect()) throw new errorConnection();
 
                     if(isset($_POST['submit'])) {
-                        if(isset($_POST['email']) and isset($_POST['password'])) {
+                        if(isset($_POST['username']) and isset($_POST['password'])) {
+                                if(strpos($_POST['username'], "@")) {
+                                    if(filter_email($_POST['username'])) {
+                                        $username = sanitize_email($_POST['username']);
+                                        } else {
+                                        echo $message = Message::error_message("Email is invalid") ;
+                                    }
+                                } else {
+                                    $username = sanitize_str($_POST['username']);
+                                }
                             
-                            $email = sanitize_email($_POST['email']);
-                            $password = $_POST['password'];
+                    
+                            
+                            if(strlen($_POST['password']) < 30) {
+                                $password = $_POST['password'];
     
-                            if($email != "" or $password != "") {
-                                if(validString($email) and validString($password)) {
-                                    $query = "SELECT * FROM vwusers WHERE email='{$email}'";
+                            }
+                            else {
+                                echo $message = Message::error_message("Password name is too long!");
+                                exit();
+                            }
+    
+                            if($username != "" or $password != "") {
+                                
+                                    $query = "SELECT * FROM vwusers WHERE email='$username' OR username='$username'";
+                                    
                                     $result = $db->query($query);
+                                    
+                                    
 
                                     if(!$result) throw new errorQuery;
 
                                     if($db->num_rows($result) == 1) {
                                         $row = $db->fetch_object($result);
-                                        if($row->active == 1) {
                                             if($row->password == $password) {
-                                                //$message = Message::success("{$row->u_name} {$row->u_lastname} , $row->status");
                                                 $_SESSION['id'] = $row->id;
                                                 $_SESSION['full_name'] = $row->u_name . " " . $row->u_lastname;
                                                 $_SESSION['status'] = $row->status_name;
@@ -78,17 +96,14 @@ require_once("_require.php");
     
                                                 header("location: index.php");
                                             } else {
-                                                $message = Message::error_message("Wrong password for user '{$email}'");
+                                                $message = Message::error_message("Wrong password for user '{$username}'");
     
                                             }
-                                        } else {
-                                            $message = Message::info("User '{$email}' exists but it's not active");
-                                        }
+                                        
                                     } else {
                                         $message = Message::info("Your email or password is not correct.");
                                     }
-                                } else $message = Message::error_message("Email or password are invalid") ;
-                            }
+                            } else $message = Message::info("All fields are required");
                         } 
                     } 
                 } catch (errorConnection $e){

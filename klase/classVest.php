@@ -1,5 +1,5 @@
 <?php
-class Article {
+/*class Article {
     protected $id;
     protected $title;
     protected $text;
@@ -44,6 +44,6 @@ class Article {
     public function __get($name){
         return $this->$name;
     }
-}
+}*/
 
 ?>

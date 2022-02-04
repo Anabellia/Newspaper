@@ -50,7 +50,6 @@ main {
 }
 
 .land {
-    width: 100%;
     height: 100vh;
     background: linear-gradient(#67676778, #eceaea1e), url("../img/landing.jpg");
     background-repeat: no-repeat;
@@ -399,4 +398,17 @@ input[name="user-comment-delete"] {
 .add__news-heading {
     margin-top: 0;
     padding-top: 40px;
+}
+
+.input {
+    padding: 7px;
+    margin-bottom: 10px;
+}
+
+.login--reg {
+    padding-top: 20px;
+}
+
+.signin__wrapp--reg {
+    padding-bottom: 35px;
 }
