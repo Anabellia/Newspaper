@@ -27,6 +27,7 @@ if(!login_check()) {
     <body>
         <?php include_once("_menu.php")?>
         
+        
         <main>
         <section class="addnews">
                 
@@ -79,11 +80,25 @@ if(!login_check()) {
                 $query = "SELECT * FROM vwall_news WHERE deleted=0 ORDER BY id DESC";
             
 
-                if(isset($_GET['id'])) $query = "SELECT * FROM vwall_news WHERE deleted = 0 AND id=" . $_GET['id'];
-                if(isset($_GET['category'])) $query="SELECT * FROM vwall_news WHERE deleted = 0 AND category=" . $_GET['category'];
-                if(isset($_GET['author'])) $query = "SELECT * FROM vwall_news WHERE deleted = 0 AND author=" . $_GET['author'];
-                if(isset($_POST['keyword'])) $query = "SELECT * FROM vwall_news WHERE deleted = 0 AND (title LIKE ('%".$_POST['keyword']."%') OR text LIKE ('%".$_POST['keyword']."%'))";
-    
+                if(isset($_GET['id'])) {
+                    $id = $_GET['id'];
+                    filter_int($id);
+                    $query = "SELECT * FROM vwall_news WHERE deleted = 0 AND id=" . $id;
+                }
+                if(isset($_GET['category']))  {
+                    $category = $_GET['category'];
+                    filter_int($category);
+                    $query="SELECT * FROM vwall_news WHERE deleted = 0 AND category=" . $category;
+                }
+                if(isset($_GET['author'])) {
+                    $author = $_GET['author'];
+                    filter_int($author);
+                    $query = "SELECT * FROM vwall_news WHERE deleted = 0 AND author=" . $author;
+                }
+
+                if(isset($_POST['keyword'])) {
+                    $query = "SELECT * FROM vwall_news WHERE deleted = 0 AND (title LIKE ('%".$_POST['keyword']."%') OR text LIKE ('%".$_POST['keyword']."%'))";
+                }
     
                 $result = $db->query($query);
                 if(!$result) throw new errorQuery;
@@ -103,7 +118,8 @@ if(!login_check()) {
                         $new=array_slice($tmp, 0, 35);
                         $a=implode(" ", $new)."...";
                         if(isset($_POST['keyword'])) {
-                            echo "<div style='padding: 0 30px;'>" . str_replace(strtolower($_POST['keyword']), "<span style='background-color:yellow'>".$_POST['keyword']."</span>", strtolower($a)) . "</div>";
+                            $keyword = sanitize_str($_POST['keyword']);
+                            echo "<div style='padding: 0 30px;'>" . str_replace(strtolower($keyword), "<span style='background-color:yellow'>".$keyword."</span>", strtolower($a)) . "</div>";
                             echo "<br>";
                         }
                             
@@ -111,8 +127,20 @@ if(!login_check()) {
                             echo "<p class='text'>$a</p>";
                     }
                         
-    
-                    echo "<b><a class='author' href='news.php?author=".$row->author."'>".$row->fullname."</a></b> <i>".$row->time."</i><br>";
+                    
+                    echo "<b><a class='author' href='news.php?author=".$row->author."'>".$row->fullname."</a></b> <i>".$row->time."</i>";
+                    $query = "SELECT count(id) AS num FROM vwcomments WHERE deleted = 0 AND article = $row->id GROUP BY article";
+                    
+                    $resultComNum = $db->query($query);
+                    if(!$resultComNum) throw new errorQuery;
+                    if(mysqli_num_rows($resultComNum) != null) {
+                        $resultComNum = $db->fetch_object($resultComNum);
+                        echo "<span style='float: right; padding-right: 30px;'>comments: " . $resultComNum->num . "</span>";
+                    } else {
+                        echo "<span style='float: right;'>comments: 0</span>";
+                    }
+                    
+
     
                     echo "</div>";
                 }
